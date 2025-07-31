@@ -1,7 +1,17 @@
 
 
 export default class Color {
-    constructor(r, g, b) {
+    static white = new Color(255, 255, 255)
+    static black = new Color(0, 0, 0)
+
+    r: number
+    g: number
+    b: number
+    lock: boolean
+    base: boolean
+
+
+    constructor(r: number, g: number, b: number) {
         this.r = r
         this.g = g
         this.b = b
@@ -9,22 +19,62 @@ export default class Color {
         this.base = false
     }
 
-    toHSL() {
+    static random(): Color {
+        function uniformRand(min: number, max: number) {
+            return Math.random() * (max - min) + min;
+        }
+        const h = Math.random();
+        const l = uniformRand(0.2, 0.9);
+        const s = uniformRand(0.6, 1.0);
+        return Color.fromHSL(h, s, l)
+    }
+
+    static checkContrast(color1: Color, color2: Color): number {
+        const l1 = color1.getRelativeLuminance()
+        const l2 = color2.getRelativeLuminance()
+        return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
+    }
+
+    static generateInBetween(color1: Color, color2: Color): Color {
+        const r = (color1.r + color2.r) / 2
+        const g = (color1.g + color2.g) / 2
+        const b = (color1.b + color2.b) / 2
+        return new Color(r, g, b)
+    }
+
+    getRelativeLuminance(): number {
+        const R = linearize(this.r);
+        const G = linearize(this.g);
+        const B = linearize(this.b);
+
+        return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+    }
+
+    toHSL(): Array<number> {
         return rgbToHsl(this.r, this.g, this.b)
     }
 
-    fromHSL(h, s, l) {
+    static fromHSL(h: number, s: number, l: number) {
         const [r, g, b] = hslToRgb(h, s, l);
-        this.r = r;
-        this.b = b;
-        this.g = g;
+        return new Color(r, g, b)
     }
 
-    toString() {
+    toString(): string {
         return `rgb(${this.r},${this.g},${this.b})`;
     }
 }
 
+/**
+ * Linearize an sRGB channel value (0–255) to linear light (0–1)
+ * @param {number} channel - R, G, or B value (0–255)
+ * @returns {number} Linearized value (0–1)
+ */
+function linearize(channel: number): number {
+    const srgb = channel / 255;
+    return srgb <= 0.03928
+        ? srgb / 12.92
+        : Math.pow((srgb + 0.055) / 1.055, 2.4);
+}
 
 const { min, max, round } = Math;
 /**
@@ -38,10 +88,14 @@ const { min, max, round } = Math;
  * @param   {number}  b       The blue color value
  * @return  {Array}           The HSL representation
  */
-function rgbToHsl(r, g, b) {
-    (r /= 255), (g /= 255), (b /= 255);
+function rgbToHsl(r: number, g: number, b: number): Array<number> {
+    r /= 255
+    g /= 255
+    b /= 255
     const vmax = max(r, g, b), vmin = min(r, g, b);
-    let h, s, l = (vmax + vmin) / 2;
+    let h: number = 0
+    let s: number = 0
+    const l: number = (vmax + vmin) / 2;
 
     if (vmax === vmin) {
         return [0, 0, l]; // achromatic
@@ -69,8 +123,8 @@ function rgbToHsl(r, g, b) {
  * @param   {number}  l       The lightness
  * @return  {Array}           The RGB representation
  */
-function hslToRgb(h, s, l) {
-    function hueToRgb(p, q, t) {
+function hslToRgb(h: number, s: number, l: number): Array<number> {
+    function hueToRgb(p: number, q: number, t: number): number {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
         if (t < 1 / 6) return p + (q - p) * 6 * t;
