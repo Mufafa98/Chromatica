@@ -1,6 +1,7 @@
 
 .colorCard {
-    display: flex;
+    /* display: flex; */
+    flex: 1;
     position: relative;
 }
 
@@ -8,6 +9,8 @@
     position: absolute;
     display: flex;
     align-items: center;
+    width: 25%;
+    height: 100%;
 }
 
 .colorCard > .separator > .addColorButton {
@@ -17,5 +20,6 @@
     font-size: 20px;
     position: absolute;
     border: none;
-    transition: opacity 0.1s ease;
+    transition: scale 0.1s ease;
+    z-index: 1;
 }
