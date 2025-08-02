@@ -1,5 +1,6 @@
 import Color from "../Color.ts"
 import "./ColorItem.css"
+import ColorCardSeparator from "./ColorCardSep.tsx"
 
 function GetTextColorBasedOn(color: Color): Color {
     const crWhite: number = Color.checkContrast(color, Color.white)
@@ -27,10 +28,6 @@ export default function ColorItem({
     setHoveredSeparator,
     addColorHandler,
 }: ColorItemProps) {
-
-    const buttonRadius = 50
-    const buttonPadding = (sepWidth - buttonRadius) / 2
-
     const leftSepIdx = index
     const rightSepIdx = index + 1
 
@@ -75,35 +72,31 @@ export default function ColorItem({
             </div>
             <div style={{
                 backgroundColor: color.toString(),
-                width: width,
-                height: height
-            }}></div>
-            <div
-                className="separator"
-                style={{
-                    right: 0,
-                    width: sepWidth,
-                    height: height,
+                // width: width,
+                // height: height
+            }}>
+            <ColorCardSeparator
+                scale={isLeftVisible ? 1 : 0}
+                left={true}
+                edge={index == 0}
+                onMouseEnter={() => { setHoveredSeparator(leftSepIdx) }}
+                onMouseLeave={() => { setHoveredSeparator(null) }}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    addColorHandler(leftSepIdx)
+                    event.currentTarget.blur()
                 }}
-                onMouseEnter={() => setHoveredSeparator(rightSepIdx)}
-                onMouseLeave={() => setHoveredSeparator(null)}
-            >
-                <button
-                    className="addColorButton"
-                    style={{
-                        width: `${buttonRadius}px`,
-                        height: `${buttonRadius}px`,
-                        borderRadius: `${buttonRadius}px`,
-                        opacity: isRightVisible ? 1 : 0,
-                        ...(index < itemCount - 1 && { right: `${-buttonRadius / 2}px` }),
-                        ...(index == itemCount - 1 && { right: `${buttonPadding}px` })
-                    }}
-                    onClick={(event) => {
-                        addColorHandler(rightSepIdx)
-                        event.currentTarget.blur()
-                    }}
-                >+</button>
-            </div>
+            />
+            <ColorCardSeparator
+                scale={isRightVisible ? 1 : 0}
+                left={false}
+                edge={index == itemCount - 1}
+                onMouseEnter={() => { setHoveredSeparator(rightSepIdx) }}
+                onMouseLeave={() => { setHoveredSeparator(null) }}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    addColorHandler(rightSepIdx)
+                    event.currentTarget.blur()
+                }}
+            />
         </div>
 
     )

@@ -58,11 +58,11 @@ export default function ColorGroup({
         setColors(prevColors => {
 
             const localColors = [...prevColors]
-            let averageColor = new Color(0, 0, 0)
+            let averageColor: Color
             if (index == 0) {
-                averageColor = Color.generateInBetween(new Color(0, 0, 0), localColors[index])
+                averageColor = Color.generateInBetween(localColors[index], Color.black, 0.8)
             } else if (index == localColors.length) {
-                averageColor = Color.generateInBetween(localColors[index - 1], new Color(255, 255, 255))
+                averageColor = Color.generateInBetween(localColors[index - 1], Color.white, 0.8)
             } else {
                 averageColor = Color.generateInBetween(localColors[index - 1], localColors[index])
             }

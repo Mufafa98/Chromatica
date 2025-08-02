@@ -36,10 +36,15 @@ export default class Color {
         return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
     }
 
-    static generateInBetween(color1: Color, color2: Color): Color {
-        const r = (color1.r + color2.r) / 2
-        const g = (color1.g + color2.g) / 2
-        const b = (color1.b + color2.b) / 2
+    /**
+     * Generate a weighted average between two colors by using the following formula:
+     * 
+     * `color1 * weight + color2 * (1 - weight)`
+     */
+    static generateInBetween(color1: Color, color2: Color, weight: number = 0.5): Color {
+        const r = color1.r * weight + color2.r * (1 - weight)
+        const g = color1.g * weight + color2.g * (1 - weight)
+        const b = color1.b * weight + color2.b * (1 - weight)
         return new Color(r, g, b)
     }
 
