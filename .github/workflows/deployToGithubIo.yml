@@ -20,7 +20,7 @@ jobs:
 
     - name: Clone Repo GithubIo
       run: |
-        git clone https://x-access-token:${{  }}@github.com/Mufafa98/Mufafa98.github.io.git Mufafa98Page
+        git clone https://x-access-token:${{ secrets.CHROMATICA_GITHUBIO_CONNECTION }}@github.com/Mufafa98/Mufafa98.github.io.git Mufafa98Page
 
     - name: Copy files to Mufafa98Page
       run: |
