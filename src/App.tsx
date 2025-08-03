@@ -6,6 +6,7 @@ import SettingsSideBar from './components/SettingsSideBar/SettingsSideBar.tsx'
 import { useState } from 'react'
 
 
+
 function App() {
   const [hue, setHue] = useState(0)
   const [saturation, setSaturation] = useState(0)
