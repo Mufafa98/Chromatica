@@ -20,14 +20,14 @@ jobs:
         token: ${{ secrets.CHROMATICA_GITHUBIO_CONNECTION }}
         path: Mufafa98Page
 
-    -name: Copy files to Mufafa98Page
-    run: |
-      mkdir -p Mufafa98Page/Chromatica
-      rsync -av --exclude='Mufafa98Page' --exclude='.git' ./ Mufafa98Page/Chromatica/
+      -name: Copy files to Mufafa98Page
+      run: |
+        mkdir -p Mufafa98Page/Chromatica
+        rsync -av --exclude='Mufafa98Page' --exclude='.git' ./ Mufafa98Page/Chromatica/
 
 
-    -name: Commit and Push to Mufafa98Page
-    run: |
+      -name: Commit and Push to Mufafa98Page
+      run: |
         cd Mufafa98Page
         git config user.name ""
         git config user.email ""
