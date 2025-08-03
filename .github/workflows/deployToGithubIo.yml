@@ -19,10 +19,15 @@ jobs:
         repository: Mufafa98/Mufafa98.github.io
         token: ${{ secrets.CHROMATICA_GITHUBIO_CONNECTION }}
         path: Mufafa98Page
+    - name: Install and build React project
+      run: |
+        npm install
+        npm run build
+
+
 
     - name: Copy files to Mufafa98Page
       run: |
-        rm -r Mufafa98Page/Chromatica
         mkdir -p Mufafa98Page/Chromatica
         rsync -av --exclude='Mufafa98Page' --exclude='.git' ./ Mufafa98Page/Chromatica/
 
