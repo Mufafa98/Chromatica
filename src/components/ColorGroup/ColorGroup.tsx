@@ -38,6 +38,12 @@ export default function ColorGroup({
 
     const paletteColorSettings = Color.fromHSL(h, s, l)
 
+    const h = (hue + 180) / 360
+    const s = (saturation + 100) / 200
+    const l = (light + 100) / 200
+
+    const colorSettings = Color.fromHSL(h, s, l)
+
     const [hoveredSeparator, setHoveredSeparator] = useState<number | null>(null)
 
     const keyDownHandler = useCallback((event: KeyboardEvent) => {
@@ -79,7 +85,11 @@ export default function ColorGroup({
                         <ColorItem
                             key={index}
                             color={colors[index]}
+<<<<<<< HEAD
                             colorSettings={paletteColorSettings}
+=======
+                            colorSettings={colorSettings}
+>>>>>>> e04de4c (ColorSettings, minor fixes)
                             index={index}
                             itemCount={colors.length}
                             hoveredSeparator={hoveredSeparator}
