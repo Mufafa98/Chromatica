@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
 import ColorItem from "./ColorItem.tsx"
-import AnalogGenerator from "./ColorGenerators/Analog.ts"
-import Color from "./Color.ts"
+import AnalogGenerator from "../ColorGenerators/Analog.ts"
+import Color from "../Color.ts"
 import "./ColorGroup.css"
 
 const generators = {
@@ -11,10 +11,27 @@ const generators = {
 
 const defaultGenerator = "Analog";
 const defaultNumOfColors = 5;
-export default function ColorGroup() {
+
+interface ColorGroupinterface {
+    hue: number,
+    saturation: number,
+    light: number
+}
+
+export default function ColorGroup({
+    hue,
+    saturation,
+    light
+}: ColorGroupinterface) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars 
     const [generator, _setGenerator] = useState(generators[defaultGenerator])
     const [colors, setColors] = useState(generator.generate(defaultNumOfColors, []))
+
+    const h = (hue + 180) / 360
+    const s = (saturation + 100) / 200
+    const l = (light + 100) / 200
+
+    const colorSettings = Color.fromHSL(h, s, l)
 
     const [hoveredSeparator, setHoveredSeparator] = useState<number | null>(null)
 
@@ -31,13 +48,6 @@ export default function ColorGroup() {
         };
     }, [keyDownHandler]);
 
-    const colorCardWidth = window.innerWidth / colors.length
-    const colorCardHeight = window.innerHeight
-
-    const sections = 5
-    const sepWidth = colorCardWidth / sections
-    const colorWidth = colorCardWidth
-    const colorHeight = colorCardHeight
 
     const addColorHandler = (index: number) => {
         setColors(prevColors => {
@@ -64,9 +74,7 @@ export default function ColorGroup() {
                         <ColorItem
                             key={index}
                             color={colors[index]}
-                            width={colorWidth}
-                            height={colorHeight}
-                            sepWidth={sepWidth}
+                            colorSettings={colorSettings}
                             index={index}
                             itemCount={colors.length}
                             hoveredSeparator={hoveredSeparator}

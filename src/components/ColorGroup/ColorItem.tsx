@@ -1,4 +1,4 @@
-import Color from "./Color.ts"
+import Color from "../Color.ts"
 import "./ColorItem.css"
 import ColorCardSeparator from "./ColorCardSep.tsx"
 
@@ -11,9 +11,7 @@ function GetTextColorBasedOn(color: Color): Color {
 
 interface ColorItemProps {
     color: Color
-    width: number
-    height: number
-    sepWidth: number
+    colorSettings: Color
     index: number
     itemCount: number
     hoveredSeparator: number | null
@@ -23,6 +21,7 @@ interface ColorItemProps {
 
 export default function ColorItem({
     color,
+    colorSettings,
     index,
     itemCount,
     hoveredSeparator,
@@ -35,12 +34,14 @@ export default function ColorItem({
     const isLeftVisible = hoveredSeparator === leftSepIdx
     const isRightVisible = hoveredSeparator === rightSepIdx
 
+    const tempColor = color.getColorWithSettings(colorSettings)
+
     return (
         <div
             className="colorCard"
             style={{
-                color: GetTextColorBasedOn(color).toString(),
-                backgroundColor: color.toString(),
+                color: GetTextColorBasedOn(tempColor).toString(),
+                backgroundColor: tempColor.toString(),
                 // width: width,
                 // height: height
             }}>

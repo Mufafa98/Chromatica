@@ -67,7 +67,36 @@ export default class Color {
     toString(): string {
         return `rgb(${this.r},${this.g},${this.b})`;
     }
+
+    getColorWithSettings(settings: Color): Color {
+        let [h, s, l] = this.toHSL()
+        const [sh, ss, sl] = settings.toHSL()
+        // console.log(sh, ss, sl);
+
+        // h = mapPiecewise(sh, 0.5, h, true)
+        h = h + sh
+        h = h > 1 ? h - 1 : h
+        s = mapPiecewise(ss, 0.5, s, false)
+        l = mapPiecewise(sl, 0.5, l, false)
+
+        return Color.fromHSL(h, s, l)
+    }
 }
+
+function mapPiecewise(m: number, split: number, nSplit: number, wrap: boolean = false): number {
+    let n: number
+    if (m <= split) {
+        n = (m / split) * nSplit;
+    } else {
+        n = nSplit + ((m - split) / (1 - split)) * (1 - nSplit);
+    }
+    if (wrap) {
+        return ((n % 1) + 1) % 1
+    } else {
+        return n
+    }
+}
+
 
 /**
  * Linearize an sRGB channel value (0–255) to linear light (0–1)
