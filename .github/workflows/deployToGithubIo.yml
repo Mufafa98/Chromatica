@@ -22,6 +22,7 @@ jobs:
 
     - name: Copy files to Mufafa98Page
       run: |
+        rm -r Mufafa98Page/Chromatica
         mkdir -p Mufafa98Page/Chromatica
         rsync -av --exclude='Mufafa98Page' --exclude='.git' ./ Mufafa98Page/Chromatica/
 
