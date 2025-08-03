@@ -10,26 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo Chromatica
+    - name: Checkout Repo Chromatica (this repo)
       uses: actions/checkout@v4
 
-    - name: Set up Git
-      run: |
-        git config --global user.email ""
-        git config --global user.name ""
-
-    - name: Clone Repo GithubIo
-      run: |
-        git clone https://x-access-token:${{ secrets.CHROMATICA_GITHUBIO_CONNECTION }}@github.com/Mufafa98/Mufafa98.github.io.git Mufafa98Page
+    - name: Checkout Repo Mufafa98.github.io
+      uses: actions/checkout@v4
+      with:
+        repository: Mufafa98/Mufafa98.github.io
+        token: ${{ secrets.CHROMATICA_GITHUBIO_CONNECTION }}
+        path: Mufafa98Page
 
     - name: Copy files to Mufafa98Page
       run: |
+        mkdir -p Mufafa98Page/Chromatica
         rm -rf Mufafa98Page/Chromatica/*
         cp -r ./* Mufafa98Page/Chromatica/
 
     - name: Commit and Push to Mufafa98Page
       run: |
         cd Mufafa98Page
+        git config user.name ""
+        git config user.email ""
         git add .
         git commit -m "Sync from Chromatica: ${{ github.sha }}" || echo "No changes to commit"
         git push
