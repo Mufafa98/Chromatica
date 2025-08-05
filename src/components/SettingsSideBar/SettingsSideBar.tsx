@@ -3,7 +3,7 @@ import Slider from "./Slider";
 
 import "./SettingsSideBar.css"
 import { ColorSettings, PaleteSettings } from "../../App";
-import Interval from "./Interval";
+// import Interval from "./Interval";
 
 interface SettingsSideBarInterface {
     paletteSettings: PaleteSettings,
@@ -15,8 +15,8 @@ interface SettingsSideBarInterface {
 export default function SettingsSideBar({
     paletteSettings,
     setPaletteSettings,
-    colorSettings,
-    setColorSettings,
+    // colorSettings,
+    // setColorSettings,
 }: SettingsSideBarInterface) {
 
     const hueGradient = `linear-gradient(to right, 
