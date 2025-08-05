@@ -4,6 +4,7 @@ import ColorItem from "./ColorItem.tsx"
 import AnalogGenerator from "../ColorGenerators/Analog.ts"
 import Color from "../Color.ts"
 import "./ColorGroup.css"
+import type { ColorSettings, PaleteSettings } from "../../App.tsx";
 
 const generators = {
     "Analog": new AnalogGenerator()
@@ -13,31 +14,35 @@ const defaultGenerator = "Analog";
 const defaultNumOfColors = 5;
 
 interface ColorGroupinterface {
-    hue: number,
-    saturation: number,
-    light: number
+    // hue: number,
+    // saturation: number,
+    // light: number
+    paletteSettings: PaleteSettings
+    colorSettings: ColorSettings
 }
 
 export default function ColorGroup({
-    hue,
-    saturation,
-    light
+    // hue,
+    // saturation,
+    // light
+    paletteSettings,
+    colorSettings
 }: ColorGroupinterface) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars 
     const [generator, _setGenerator] = useState(generators[defaultGenerator])
-    const [colors, setColors] = useState(generator.generate(defaultNumOfColors, []))
+    const [colors, setColors] = useState(generator.generate(defaultNumOfColors, [], colorSettings))
 
-    const h = (hue + 180) / 360
-    const s = (saturation + 100) / 200
-    const l = (light + 100) / 200
+    const h = paletteSettings.getH()
+    const s = paletteSettings.getS()
+    const l = paletteSettings.getL()
 
-    const colorSettings = Color.fromHSL(h, s, l)
+    const paletteColorSettings = Color.fromHSL(h, s, l)
 
     const [hoveredSeparator, setHoveredSeparator] = useState<number | null>(null)
 
     const keyDownHandler = useCallback((event: KeyboardEvent) => {
         if (event.key === ' ') {
-            setColors((colors) => generator.generate(colors.length, colors));
+            setColors((colors) => generator.generate(colors.length, colors, colorSettings));
         }
     }, [generator]);
     useEffect(() => {
@@ -74,7 +79,7 @@ export default function ColorGroup({
                         <ColorItem
                             key={index}
                             color={colors[index]}
-                            colorSettings={colorSettings}
+                            colorSettings={paletteColorSettings}
                             index={index}
                             itemCount={colors.length}
                             hoveredSeparator={hoveredSeparator}

@@ -1,4 +1,5 @@
-
+import type { ColorSettings } from "../App"
+import { uniformRand } from "../utils"
 
 export default class Color {
     static white = new Color(255, 255, 255)
@@ -19,13 +20,13 @@ export default class Color {
         this.base = false
     }
 
-    static random(): Color {
-        function uniformRand(min: number, max: number) {
-            return Math.random() * (max - min) + min;
-        }
+    static random(colorSettings: ColorSettings): Color {
         const h = Math.random();
         const l = uniformRand(0.2, 0.9);
-        const s = uniformRand(0.6, 1.0);
+        const s = uniformRand(
+            colorSettings.getSMin(),
+            colorSettings.getSMax()
+        );
         return Color.fromHSL(h, s, l)
     }
 
@@ -71,9 +72,6 @@ export default class Color {
     getColorWithSettings(settings: Color): Color {
         let [h, s, l] = this.toHSL()
         const [sh, ss, sl] = settings.toHSL()
-        // console.log(sh, ss, sl);
-
-        // h = mapPiecewise(sh, 0.5, h, true)
         h = h + sh
         h = h > 1 ? h - 1 : h
         s = mapPiecewise(ss, 0.5, s, false)
