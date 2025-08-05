@@ -20,11 +20,11 @@ export default function Slider({
         <div style={{
             display: "flex",
             flexDirection: "column",
-            margin: "10px"
         }}>
             <div style={{
                 display: "flex",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
+                margin: "4px, 0"
             }}>
                 {title}
                 <input
