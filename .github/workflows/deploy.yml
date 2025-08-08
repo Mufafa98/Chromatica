@@ -39,7 +39,7 @@ jobs:
 
       # Deploy to github pages inside the specific folder
       - name: Deploy to github pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           external_repository: Mufafa98/Mufafa98.github.io
