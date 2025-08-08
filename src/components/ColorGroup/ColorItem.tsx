@@ -45,36 +45,6 @@ export default function ColorItem({
                 // width: width,
                 // height: height
             }}>
-            <div
-                className="separator"
-                style={{
-                    width: sepWidth,
-                    height: height,
-                }}
-                onMouseEnter={() => setHoveredSeparator(leftSepIdx)}
-                onMouseLeave={() => setHoveredSeparator(null)}
-            >
-                <button
-                    className="addColorButton"
-                    style={{
-                        width: `${buttonRadius}px`,
-                        height: `${buttonRadius}px`,
-                        borderRadius: `${buttonRadius}px`,
-                        opacity: isLeftVisible ? 1 : 0,
-                        ...(index > 0 && { left: `${-buttonRadius / 2}px` }),
-                        ...(index == 0 && { left: `${buttonPadding}px` })
-                    }}
-                    onClick={(event) => {
-                        addColorHandler(leftSepIdx)
-                        event.currentTarget.blur()
-                    }}
-                >+</button>
-            </div>
-            <div style={{
-                backgroundColor: color.toString(),
-                // width: width,
-                // height: height
-            }}>
             <ColorCardSeparator
                 scale={isLeftVisible ? 1 : 0}
                 left={true}

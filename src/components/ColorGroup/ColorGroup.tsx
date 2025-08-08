@@ -79,15 +79,7 @@ export default function ColorGroup({
                         <ColorItem
                             key={index}
                             color={colors[index]}
-<<<<<<< HEAD
-<<<<<<< HEAD
                             colorSettings={paletteColorSettings}
-=======
-                            colorSettings={colorSettings}
->>>>>>> e04de4c (ColorSettings, minor fixes)
-=======
-                            colorSettings={paletteColorSettings}
->>>>>>> 6920bbc (Minor UI changes)
                             index={index}
                             itemCount={colors.length}
                             hoveredSeparator={hoveredSeparator}
