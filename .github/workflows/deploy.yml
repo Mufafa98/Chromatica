@@ -35,10 +35,13 @@ jobs:
         run: |
           mkdir -p deploy-folder/Chromatica
           cp -r dist/* deploy-folder/Chromatica/
+          tree deploy-folder
 
       # Deploy to github pages inside the specific folder
       - name: Deploy to github pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: deploy-folder
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: Mufafa98/Mufafa98.github.io
+          publish_branch: main
+          publish_dir: ./deploy-folder
