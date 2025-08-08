@@ -1,0 +1,44 @@
+name: Deploy Chromatica to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Check out NodeJS
+      - name: Checkout Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      # Install Dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Build project
+      - name: Build project
+        run: npm run build
+
+      # Prepare subfolder for deployment
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p deploy-folder/Chromatica
+          cp -r dist/* deploy-folder/Chromatica/
+
+      # Deploy to github pages inside the specific folder
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: deploy-folder
