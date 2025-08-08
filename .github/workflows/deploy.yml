@@ -30,13 +30,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # Prepare subfolder for deployment
-      - name: Prepare deployment folder
-        run: |
-          mkdir -p deploy-folder/Chromatica
-          cp -r dist/* deploy-folder/Chromatica/
-          tree deploy-folder
-
       # Deploy to github pages inside the specific folder
       - name: Deploy to github pages
         uses: peaceiris/actions-gh-pages@v4
@@ -44,4 +37,4 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           external_repository: Mufafa98/Mufafa98.github.io
           publish_branch: main
-          publish_dir: ./deploy-folder
+          publish_dir: dist
