@@ -35,6 +35,7 @@ jobs:
         run: |
           mkdir -p deploy-folder/Chromatica
           cp -r dist/* deploy-folder/Chromatica/
+          tree deploy-folder
 
       # Deploy to github pages inside the specific folder
       - name: Deploy to github pages
