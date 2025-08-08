@@ -96,7 +96,7 @@ export default function SettingsSideBar({
                 />
             </div>
             <div className="settings-pannel">
-                <DividerWithText text="Color Generation" />
+{/*                 <DividerWithText text="Color Generation" /> */}
                 {/* <Interval
                     text={"Saturation"}
                     minValue={colorSettings.minSaturation}
